@@ -28,7 +28,7 @@ body.estimate-body { background: var(--navy); }
   background-image:
     linear-gradient(180deg, rgba(25,45,84,.84) 0%, rgba(25,45,84,.9) 45%, rgba(13,24,45,.96) 100%),
     url('https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=1600&q=60&auto=format&fit=crop');
-  background-size: cover; background-position: center;
+  background-size: cover; background-position: center 72%;
 }
 @media (min-width: 640px) { .estimate { min-height: 100dvh; padding: 40px 24px; } }
 .estimate::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--sun); z-index: 20; }
