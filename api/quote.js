@@ -44,6 +44,12 @@ module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   const reply = (status, ok, message = '') => res.status(status).json({ ok, message });
   const failMsg = 'We could not receive your request. Please call or text us at ' + PHONE_DISPLAY + '.';
+  if (req.method === 'GET') {
+    // Lets the pages know whether the form can deliver leads (hides the Quick Form until Kommo is set up).
+    let okBase = false;
+    try { const u = new URL(String(process.env.KOMMO_BASE_URL || '')); okBase = u.protocol === 'https:' && /^[a-z0-9-]+\.kommo\.com$/i.test(u.hostname); } catch {}
+    return res.status(200).json({ ready: okBase && !!process.env.KOMMO_ACCESS_TOKEN && !!posInt(process.env.KOMMO_PIPELINE_ID) });
+  }
   if (req.method !== 'POST') return reply(405, false, 'Method not allowed.');
 
   let body = req.body;

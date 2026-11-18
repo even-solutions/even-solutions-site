@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   if (!sameSite) return res.status(400).json({ ok: false });
 
   const method = clean(body.method, 20);
-  await sendMetaEvent({
+  const capi = await sendMetaEvent({
     eventName: body.event_name,
     eventId: clean(body.event_id, 64),
     url,
@@ -26,5 +26,5 @@ module.exports = async function handler(req, res) {
     fbclid: clean(body.fbclid, 300),
     custom: { contact_method: method, lead_code: clean(body.lead_code, 40) },
   });
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({ ok: true, capi });
 };
