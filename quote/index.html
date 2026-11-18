@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick Estimate Form — Even Solutions</title>
+  <meta name="description" content="Request a free home remodeling estimate from Even Solutions in about 30 seconds.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#192d54">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-navy.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/assets/even.css">
+  <script src="/assets/config.js"></script>
+</head>
+<body>
+  <header class="page-top"><a href="/estimate" aria-label="Even Solutions"><img src="/images/logo-white.svg" alt="Even Solutions" width="1200" height="468"></a></header>
+
+  <main class="quote">
+    <div class="quote-box">
+      <div class="quote-intro">
+        <p class="eyebrow">Free Estimate</p>
+        <h1>Ready to Transform Your Home?</h1>
+        <p>Fill in the form and we will get back to you within 24 hours with a detailed, no-obligation
+          estimate. Prefer to talk? Call us anytime.</p>
+        <a href="tel:+16893336828" class="contact-line btn-call">
+          <span class="c"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg></span>
+          <span><small>Call</small><strong>(689) 333-6828</strong></span>
+        </a>
+      </div>
+
+      <div class="form-card">
+        <form class="qform" id="quote-form" novalidate>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="gclid"><input type="hidden" name="gbraid"><input type="hidden" name="wbraid">
+          <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign">
+          <input type="hidden" name="utm_content"><input type="hidden" name="utm_term">
+
+          <label><span>Name</span>
+            <input name="name" type="text" required maxlength="120" autocomplete="name" placeholder="John Smith"></label>
+          <label><span>Phone</span>
+            <input name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="(555) 123-4567"></label>
+          <label class="full"><span>Email</span>
+            <input name="email" type="email" maxlength="254" autocomplete="email" placeholder="john@email.com"></label>
+          <label><span>ZIP code</span>
+            <input name="zipCode" type="text" required inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" autocomplete="postal-code" placeholder="34787"></label>
+          <label><span>Service</span>
+            <select name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              <option>Flooring</option>
+              <option>Interior Painting</option>
+              <option>Exterior Painting</option>
+              <option>Bathroom Remodel</option>
+              <option>Accent Walls</option>
+              <option>Demolition</option>
+              <option>Other</option>
+            </select></label>
+
+          <p class="error full" role="alert" hidden></p>
+
+          <button type="submit" class="btn-sun full">Send My Request →</button>
+
+          <p class="fine full">
+            By submitting, you agree to receive calls and texts from Even Solutions about your estimate. Msg &amp; data rates may apply. Reply STOP to opt out.
+            <a href="/privacy-policy">Privacy Policy</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/tracking.js"></script>
+  <script>
+    (function () {
+      var C = window.EVEN_CONFIG || {};
+      var form = document.getElementById('quote-form');
+      var err = form.querySelector('.error');
+      var btn = form.querySelector('button[type=submit]');
+      function showError(msg) { err.textContent = msg; err.hidden = false; }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.hidden = true;
+        if (!form.checkValidity()) { showError('Please check the required fields.'); form.reportValidity(); return; }
+        btn.disabled = true; btn.textContent = 'Sending…';
+        var data = Object.fromEntries(new FormData(form).entries());
+        data.smsConsent = true;
+        fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+          .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || !j.ok) throw new Error(j.message || ''); return j; }); })
+          .then(function () {
+            if (typeof window.gtag === 'function') {
+              gtag('event', 'generate_lead', { form_name: 'quick_form', service: data.service });
+              if (C.adsConversions && C.adsConversions.lead_form) gtag('event', 'conversion', { send_to: C.adsConversions.lead_form });
+            }
+            location.href = '/thank-you';
+          })
+          .catch(function (x) {
+            showError(x.message || 'Something went wrong. Please call us at ' + (C.phoneDisplay || '(689) 333-6828') + '.');
+            btn.disabled = false; btn.textContent = 'Send My Request →';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank You — Even Solutions</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#192d54">
+  <link rel="icon" type="image/svg+xml" href="/images/logo-navy.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/assets/even.css">
+  <script src="/assets/config.js"></script>
+</head>
+<body>
+  <main class="thanks">
+    <img src="/images/logo-navy.svg" alt="Even Solutions" width="1200" height="468">
+    <h1>Thanks! We'll contact you shortly.</h1>
+    <a href="tel:+16893336828" class="btn-sun btn-call">Call Us</a>
+  </main>
+  <script src="/assets/tracking.js"></script>
+  <script>
+    (function () {
+      var attempts = 0;
+      (function sendLead() {
+        if (typeof window.fbq === 'function') { fbq('track', 'Lead'); return; }
+        if (++attempts < 20) setTimeout(sendLead, 250);
+      })();
+    })();
+  </script>
+</body>
+</html>
