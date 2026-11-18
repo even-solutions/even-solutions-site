@@ -32,7 +32,7 @@ function clientIp(req) {
  * opts: { eventName, eventId, url, req, user: { email, phone, zip, name }, custom: {...}, fbclid }
  */
 async function sendMetaEvent(opts) {
-  const pixel = process.env.META_PIXEL_ID;
+  const pixel = process.env.META_PIXEL_ID || '4157427234549939';
   const token = process.env.META_CAPI_TOKEN;
   if (!pixel || !token || !/^[0-9]+$/.test(pixel)) return false;
   const { req } = opts;

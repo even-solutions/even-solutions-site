@@ -11,8 +11,8 @@ window.EVEN_CONFIG = {
   // While empty, the WhatsApp button opens a text message to the main phone instead.
   whatsapp: '',
 
-  // TODO: Even Solutions Meta (Facebook) Pixel ID, digits only. Empty = pixel does not load.
-  metaPixelId: '',
+  // Even Solutions Meta Pixel (dataset in the Even Solutions business portfolio).
+  metaPixelId: '4157427234549939',
 
   // Optional: Google Analytics 4 ID (G-XXXXXXX) and Google Ads ID (AW-XXXXXXXXX). Empty = not loaded.
   ga4Id: '',
