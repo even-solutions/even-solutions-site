@@ -25,6 +25,8 @@ module.exports = async function handler(req, res) {
     req,
     fbclid: clean(body.fbclid, 300),
     custom: { contact_method: method, lead_code: clean(body.lead_code, 40) },
+    // Optional Events Manager test code (shows only in Test events, never counted in ads).
+    testCode: /^TEST[0-9]{3,10}$/.test(String(body.test_event_code || '')) ? body.test_event_code : undefined,
   });
   return res.status(200).json({ ok: true, capi });
 };

@@ -62,7 +62,8 @@ async function sendMetaEvent(opts) {
       custom_data: opts.custom || undefined,
     }],
   };
-  if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
+  const testCode = opts.testCode || process.env.META_TEST_EVENT_CODE;
+  if (testCode) payload.test_event_code = testCode;
   try {
     const r = await fetch('https://graph.facebook.com/v21.0/' + pixel + '/events?access_token=' + encodeURIComponent(token), {
       method: 'POST',
