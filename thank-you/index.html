@@ -19,12 +19,18 @@
     <h1>Thanks! We'll contact you shortly.</h1>
     <a href="tel:+16893336828" class="btn-sun btn-call">Call Us</a>
   </main>
-  <script src="/assets/tracking.js"></script>
+  <script src="/assets/tracking.js?v=4"></script>
   <script>
     (function () {
       var attempts = 0;
       (function sendLead() {
-        if (typeof window.fbq === 'function') { fbq('track', 'Lead'); return; }
+        if (typeof window.fbq === 'function') {
+          var id = '', svc = '';
+          try { id = sessionStorage.getItem('even_lead_event_id') || ''; svc = sessionStorage.getItem('even_lead_service') || ''; sessionStorage.removeItem('even_lead_event_id'); } catch (e) {}
+          if (!id) return; // only count real form submissions, not page reloads or direct visits
+          fbq('track', 'Lead', { content_name: svc }, { eventID: id });
+          return;
+        }
         if (++attempts < 20) setTimeout(sendLead, 250);
       })();
     })();

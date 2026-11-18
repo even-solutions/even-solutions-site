@@ -56,7 +56,18 @@
     if (typeof window.gtag === 'function') window.gtag('event', 'contact_click', { contact_method: e.replace(/_click$/, ''), service: svc });
     if (ADS[e] && typeof window.gtag === 'function') gtag('event', 'conversion', { send_to: ADS[e] });
   };
-  var metaContact = function (method) { if (typeof window.fbq === 'function') fbq('track', 'Contact', { contact_method: method, lead_code: code }); };
+  var newId = function () { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2); };
+  window.EVEN_NEW_EVENT_ID = newId;
+  var metaContact = function (method) {
+    var id = newId();
+    if (typeof window.fbq === 'function') fbq('track', 'Contact', { contact_method: method, lead_code: code }, { eventID: id });
+    // Server copy (Conversions API) with the same event_id, so Meta deduplicates.
+    try {
+      var payload = JSON.stringify({ event_name: 'Contact', event_id: id, method: method, lead_code: code, url: location.href, fbclid: v('fbclid') });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/event', new Blob([payload], { type: 'application/json' }));
+      else fetch('/api/event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true });
+    } catch (e) {}
+  };
 
   var isWA = function (a) { return a.classList.contains('btn-wa'); };
   var isSMS = function (a) { return a.classList.contains('btn-sms'); };
