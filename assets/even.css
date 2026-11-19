@@ -175,3 +175,46 @@ body.estimate-body { background: var(--navy); }
 .sms-consent .sms-links a { color: var(--bronze); font-weight: 600; }
 .qform .fine { font-size: 11px; color: #8d949c; }
 .qform .fine a { color: var(--bronze); }
+
+/* ---------- Quick Form v3: same pattern as /estimate ---------- */
+.quote-card { position: relative; }
+.back-link { position: absolute; top: 18px; left: 16px; display: inline-flex; align-items: center; gap: 2px; font-size: 13px; font-weight: 600; color: var(--slate); text-decoration: none; }
+.back-link svg { width: 16px; height: 16px; }
+.back-link:hover { color: var(--navy); }
+.eform { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.eform .hp { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; pointer-events: none; }
+.eform .row { display: grid; grid-template-columns: 1fr 1.25fr; gap: 10px; }
+.eform .field { display: flex; flex-direction: column; gap: 5px; }
+.eform .field > span { font-size: 12px; font-weight: 700; color: var(--navy); padding-left: 2px; }
+.eform .field em { font-style: normal; font-weight: 500; color: #8d949c; }
+.eform input, .eform select {
+  width: 100%; height: 52px; font: inherit; font-size: 16px; color: var(--navy); outline: none;
+  border: 1px solid var(--line); border-radius: 14px; padding: 0 14px;
+  background: linear-gradient(180deg, #fff 0%, #fcfaf7 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(25,45,84,.06);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.eform select { appearance: none; -webkit-appearance: none; padding-right: 34px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235d6670' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"), linear-gradient(180deg, #fff 0%, #fcfaf7 100%);
+  background-repeat: no-repeat; background-position: right 12px center, 0 0; background-size: 16px, auto; }
+.eform select:invalid { color: #a39b8e; }
+.eform input::placeholder { color: #a39b8e; }
+.eform input:focus, .eform select:focus { border-color: var(--cobalt); box-shadow: 0 0 0 4px rgba(48,87,163,.18); }
+.eform .error { margin: 0; border-radius: 12px; border: 1px solid #f0c4b8; background: #fdf1ed; padding: 10px 12px; font-size: 13px; color: #a3361a; }
+.eform .sms-consent { display: grid; grid-template-columns: 16px 1fr; gap: 8px; align-items: start; margin-top: 4px; padding: 0; border: 0; background: transparent; }
+.eform .sms-consent input[type=checkbox] { width: 15px; height: 15px; margin: 1px 0 0; padding: 0; box-shadow: none; accent-color: var(--navy); cursor: pointer; }
+.eform .sms-consent label { font-size: 9.5px; line-height: 1.45; color: #7d8590; cursor: pointer; }
+.eform .sms-consent a { font-weight: 600; color: var(--navy); text-underline-offset: 2px; white-space: nowrap; }
+.ebtn {
+  margin-top: 4px; display: flex; height: 60px; width: 100%; align-items: center; justify-content: center; gap: 12px; position: relative;
+  border: 0; border-radius: 16px; cursor: pointer; font: inherit; font-size: 17px; font-weight: 800; color: #fff;
+  background: linear-gradient(180deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 60%), var(--navy);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.15), 0 10px 22px -8px rgba(13,24,45,.7);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+.ebtn:hover { transform: translateY(-2px); }
+.ebtn:active { transform: scale(.98); }
+.ebtn:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(242,177,52,.6); }
+.ebtn:disabled { opacity: .7; cursor: default; transform: none; }
+.ebtn .chev { position: absolute; right: 14px; background: var(--sun); }
+.quote-card .consent a { white-space: nowrap; }
