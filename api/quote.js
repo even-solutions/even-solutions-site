@@ -131,7 +131,7 @@ module.exports = async function handler(req, res) {
     'Service: ' + service,
     'ZIP code: ' + zip,
     smsConsent
-      ? 'SMS consent: YES — optional checkbox checked on ' + formPage + ' at ' + now.toISOString() + ' (text v2026-11-18: "I agree to receive text messages from Even Solutions about my estimate, scheduling, and project updates...")'
+      ? 'SMS consent: YES — optional checkbox checked on ' + formPage + ' at ' + now.toISOString() + ' (text v2026-11-18b: "Text me about my estimate, scheduling, and project updates from Even Solutions...")'
       : 'SMS consent: NO — do not send text messages unless the customer texts first or opts in',
     ...Object.entries(tracking).map(([k, v]) => k + ': ' + v),
   ].join('\n');
