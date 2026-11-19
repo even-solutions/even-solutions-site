@@ -150,3 +150,28 @@ body.estimate-body { background: var(--navy); }
 .thanks h1 { max-width: 36rem; margin: 0; font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--navy); }
 @media (min-width: 640px) { .thanks h1 { font-size: 46px; } }
 .thanks .btn-sun { margin-top: 32px; padding: 16px 32px; }
+
+/* ---------- Quick Form v2: light card on navy ---------- */
+.form-card { background: #fff; border-radius: 22px; padding: 26px 22px; box-shadow: 0 24px 48px -16px rgba(0,0,0,.45); }
+@media (min-width: 640px) { .form-card { padding: 34px 32px; } }
+.form-card .form-head { margin: 0 0 18px; }
+.form-card .form-head h2 { margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 1.2; color: var(--navy); }
+.form-card .form-head p { margin: 4px 0 0; font-size: 14px; color: var(--slate); }
+.qform { gap: 14px; }
+.qform label > span { font-size: 11.5px; letter-spacing: .06em; color: var(--slate); }
+.qform input, .qform select { background: #f7f4ef; border: 1.5px solid #e4ddd1; color: var(--navy); border-radius: 12px; padding: 13px 15px; font-size: 15px; transition: border-color .2s, box-shadow .2s, background-color .2s; }
+.qform input::placeholder { color: #a39b8e; }
+.qform select { background: #f7f4ef; color: var(--navy); }
+.qform input:focus, .qform select:focus { border-color: var(--cobalt); background: #fff; box-shadow: 0 0 0 4px rgba(48,87,163,.15); }
+.qform .error { border-color: #f0c4b8; background: #fdf1ed; color: #a3361a; }
+.qform .btn-sun { padding: 16px 28px; font-size: 15px; box-shadow: 0 10px 22px -10px rgba(217,151,26,.8); }
+.qform .btn-sun:hover { box-shadow: 0 14px 26px -10px rgba(217,151,26,.9); transform: translateY(-1px); }
+
+/* SMS opt-in: discreet but readable (A2P requires legible consent) */
+.sms-consent { grid-template-columns: 18px 1fr; gap: 4px 10px; border: 0; background: transparent; padding: 2px 0 0; }
+.sms-consent input[type=checkbox] { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--navy); }
+.sms-consent label { font-size: 11px; line-height: 1.5; color: #7d8590; }
+.sms-consent .sms-links { font-size: 11px; }
+.sms-consent .sms-links a { color: var(--bronze); font-weight: 600; }
+.qform .fine { font-size: 11px; color: #8d949c; }
+.qform .fine a { color: var(--bronze); }
