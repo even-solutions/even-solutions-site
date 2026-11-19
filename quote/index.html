@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/even.css?v=6">
+  <link rel="stylesheet" href="/assets/even.css?v=7">
   <script src="/assets/config.js?v=5"></script>
 </head>
 <body>
@@ -40,10 +40,15 @@
 
           <label><span>Name</span>
             <input name="name" type="text" required maxlength="120" autocomplete="name" placeholder="John Smith"></label>
-          <label><span>Phone</span>
+          <label><span>Mobile phone</span>
             <input name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="(555) 123-4567"></label>
           <label class="full"><span>Email</span>
             <input name="email" type="email" maxlength="254" autocomplete="email" placeholder="john@email.com"></label>
+          <div class="sms-consent full">
+            <input type="checkbox" id="sms-consent" name="smsConsent" value="yes">
+            <label for="sms-consent">I agree to receive text messages from Even Solutions about my estimate, scheduling, and project updates. Message frequency varies. Message and data rates may apply. Reply HELP for help or STOP to opt out. Consent is not a condition of purchase.</label>
+            <p class="sms-links"><a href="/sms-terms" target="_blank" rel="noopener">SMS Terms</a> · <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a></p>
+          </div>
           <label><span>ZIP code</span>
             <input name="zipCode" type="text" required inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" autocomplete="postal-code" placeholder="34787"></label>
           <label><span>Service</span>
@@ -63,8 +68,8 @@
           <button type="submit" class="btn-sun full">Send My Request →</button>
 
           <p class="fine full">
-            By submitting, you agree to receive calls and texts from Even Solutions about your estimate. Msg &amp; data rates may apply. Reply STOP to opt out.
-            <a href="/privacy-policy">Privacy Policy</a>
+            Text messages are optional: you can send this form without checking the SMS box.
+            We will reply about your estimate by phone or email. <a href="/privacy-policy">Privacy Policy</a>
           </p>
         </form>
       </div>
@@ -76,9 +81,6 @@
     (function () {
       var C = window.EVEN_CONFIG || {};
       var form = document.getElementById('quote-form');
-      fetch('/api/quote', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-        if (!j || !j.ready) location.replace('/estimate');
-      }).catch(function () {});
       var err = form.querySelector('.error');
       var btn = form.querySelector('button[type=submit]');
       function showError(msg) { err.textContent = msg; err.hidden = false; }
@@ -88,7 +90,7 @@
         if (!form.checkValidity()) { showError('Please check the required fields.'); form.reportValidity(); return; }
         btn.disabled = true; btn.textContent = 'Sending…';
         var data = Object.fromEntries(new FormData(form).entries());
-        data.smsConsent = true;
+        data.smsConsent = document.getElementById('sms-consent').checked; // optional, unchecked by default
         data.formPage = location.href;
         data.meta_event_id = window.EVEN_NEW_EVENT_ID ? window.EVEN_NEW_EVENT_ID() : String(Date.now());
         try { sessionStorage.setItem('even_lead_event_id', data.meta_event_id); sessionStorage.setItem('even_lead_service', data.service); } catch (e) {}

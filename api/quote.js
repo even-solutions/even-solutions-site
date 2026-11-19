@@ -69,7 +69,8 @@ module.exports = async function handler(req, res) {
   if (!name || !phone || !/^[0-9]{5}$/.test(zip) || !SERVICES.includes(service) || (email && !EMAIL_RE.test(email))) {
     return reply(400, false, 'Please check the required fields.');
   }
-  if (body.smsConsent !== true) return reply(400, false, 'Please accept the contact terms to continue.');
+  // SMS consent is optional and never required to submit (A2P 10DLC).
+  const smsConsent = body.smsConsent === true;
 
   const base = String(process.env.KOMMO_BASE_URL || '').replace(/\/+$/, '');
   const token = String(process.env.KOMMO_ACCESS_TOKEN || '');
@@ -129,7 +130,9 @@ module.exports = async function handler(req, res) {
   const details = [
     'Service: ' + service,
     'ZIP code: ' + zip,
-    'SMS/call consent: yes (quick form, ' + now.toISOString() + ')',
+    smsConsent
+      ? 'SMS consent: YES — optional checkbox checked on ' + formPage + ' at ' + now.toISOString() + ' (text v2026-11-18: "I agree to receive text messages from Even Solutions about my estimate, scheduling, and project updates...")'
+      : 'SMS consent: NO — do not send text messages unless the customer texts first or opts in',
     ...Object.entries(tracking).map(([k, v]) => k + ': ' + v),
   ].join('\n');
   if (leadId) {
@@ -159,7 +162,7 @@ module.exports = async function handler(req, res) {
   // Optional email copy.
   const { RESEND_API_KEY, QUOTE_TO, QUOTE_FROM } = process.env;
   if (RESEND_API_KEY && QUOTE_TO && QUOTE_FROM) {
-    const rows = [['Name', name], ['Phone', phone], ['Email', email || '—'], ['ZIP code', zip], ['Service', service], ['Lead code', tracking.utm_content || '—']];
+    const rows = [['Name', name], ['Mobile', phone], ['SMS consent', smsConsent ? 'Yes (opted in)' : 'No'], ['Email', email || '—'], ['ZIP code', zip], ['Service', service], ['Lead code', tracking.utm_content || '—']];
     const td = (style, v) => '<td style="padding:10px 20px;border-bottom:1px solid #eee;' + style + '">' + esc(v) + '</td>';
     const html = '<div style="font-family:Arial,sans-serif;background:#ece6dc;padding:24px"><div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden"><div style="background:#192d54;padding:18px 20px;color:#fff;font-size:18px">New estimate request — Even Solutions</div><table style="width:100%;border-collapse:collapse">'
       + rows.map(([l, v]) => '<tr>' + td('color:#8a6a3f;font-size:12px;text-transform:uppercase;width:120px', l) + td('color:#192d54;font-size:14px', v) + '</tr>').join('') + '</table></div></div>';

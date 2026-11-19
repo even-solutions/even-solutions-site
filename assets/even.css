@@ -136,6 +136,11 @@ body.estimate-body { background: var(--navy); }
 .btn-sun { cursor: pointer; border: 0; border-radius: 999px; background: var(--sun); padding: 14px 32px; font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); transition: background-color .3s, box-shadow .3s; text-decoration: none; display: inline-block; }
 .btn-sun:hover { background: var(--sun-dark); box-shadow: 0 10px 20px -6px rgba(242,177,52,.35); }
 .btn-sun:disabled { opacity: .6; }
+.sms-consent { display: grid; grid-template-columns: 22px 1fr; gap: 6px 12px; align-items: start; border-radius: 12px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.04); padding: 14px 16px; }
+.sms-consent input[type=checkbox] { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--sun); cursor: pointer; }
+.sms-consent label { display: block; font-size: 13px; line-height: 1.55; color: rgba(255,255,255,.85); cursor: pointer; }
+.sms-consent .sms-links { grid-column: 2; margin: 0; font-size: 12px; }
+.sms-consent .sms-links a { color: var(--sun); font-weight: 600; }
 .qform .fine { margin: 0; text-align: center; font-size: 12px; line-height: 1.6; color: rgba(255,255,255,.55); }
 .qform .fine a { color: var(--sun); font-weight: 600; }
 

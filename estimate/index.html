@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/even.css?v=6">
+  <link rel="stylesheet" href="/assets/even.css?v=7">
   <script src="/assets/config.js?v=5"></script>
 </head>
 <body class="estimate-body">
@@ -80,7 +80,7 @@
         </a>
 
         <!-- Quick Form -->
-        <a href="/quote" class="opt" data-channel="form" id="quick-form" hidden aria-label="Open the Even Solutions quick form. Takes about 30 seconds">
+        <a href="/quote" class="opt" data-channel="form" id="quick-form" aria-label="Open the Even Solutions quick form. Takes about 30 seconds">
           <span class="ico form" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path fill="#FFFFFF" d="M9 2h6a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V3a1 1 0 0 1 1-1z"/><path d="m8.5 13.5 2.5 2.5 4.5-5" fill="none" stroke="#192d54" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
@@ -111,9 +111,6 @@
         if (window.dataLayer) window.dataLayer.push(Object.assign({ event: name }, detail));
       }
       track('estimate_page_view');
-      fetch('/api/quote', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (j) {
-        if (j && j.ready) document.getElementById('quick-form').hidden = false;
-      }).catch(function () {});
       document.querySelectorAll('[data-channel]').forEach(function (a) {
         a.addEventListener('click', function () {
           var ch = a.getAttribute('data-channel');
